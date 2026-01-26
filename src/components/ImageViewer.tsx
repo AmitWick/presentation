@@ -1,20 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { pdfToImages } from "../pdfToImages";
+import type { BoardType } from "../App";
 
 type Props = {
   slides: string[];
-  setSlides: (slides: string[]) => void;
-  setCurrent: (index: number) => void;
-  containerRef: React.RefObject<HTMLDivElement> | null;
-  blackboardRef: React.RefObject<HTMLDivElement> | null;
-  setIsFullScreen: (isFullScreen: boolean) => void;
-  setBoardType: (
-    type: "blackboard" | "whiteboard" | "image" | "noType"
-  ) => void;
+  setSlides: React.Dispatch<React.SetStateAction<string[]>>;
+  setCurrent: React.Dispatch<React.SetStateAction<number>>;
+  containerRef: React.RefObject<HTMLDivElement | null>;
+  setIsFullScreen: React.Dispatch<React.SetStateAction<boolean>>;
+  setBoardType: React.Dispatch<React.SetStateAction<BoardType>>;
   isFullScreen: boolean;
+  setOpenOptionComponent: React.Dispatch<React.SetStateAction<boolean>>;
 };
-
-type BoardType = "noType" | "image" | "blackboard" | "whiteboard";
 
 const ImageViewer = ({
   slides,
@@ -22,7 +19,6 @@ const ImageViewer = ({
   setSlides,
   containerRef,
   setIsFullScreen,
-  blackboardRef,
   setBoardType,
   isFullScreen,
   setOpenOptionComponent,
@@ -36,8 +32,6 @@ const ImageViewer = ({
     localStorage.setItem("slides", JSON.stringify(imgs));
     setLoading(false);
   };
-
-  // const imageCanvasRef = useRef(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -56,12 +50,12 @@ const ImageViewer = ({
       }
 
       if (e.key.toLowerCase() === "f") {
-        enterFullscreen(containerRef, "image");
+        enterFullscreen("image");
       }
 
       if (e.key.toLowerCase() === "b") {
         if (!isFullScreen) {
-          enterFullscreen(containerRef, "blackboard");
+          enterFullscreen("blackboard");
         } else {
           setBoardType((prev) =>
             prev === "blackboard" ? "image" : "blackboard"
@@ -70,7 +64,7 @@ const ImageViewer = ({
       }
       if (e.key.toLowerCase() === "w") {
         if (!isFullScreen) {
-          enterFullscreen(containerRef, "whiteboard");
+          enterFullscreen("whiteboard");
         } else {
           setBoardType((prev) =>
             prev === "whiteboard" ? "image" : "whiteboard"
@@ -83,23 +77,23 @@ const ImageViewer = ({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [slides.length]);
 
-  const enterFullscreen = async (forwardRef, boardType: BoardType) => {
-    if (!forwardRef.current) return;
+  const enterFullscreen = async (boardType: BoardType) => {
+    if (!containerRef?.current) return;
 
     if (!document.fullscreenElement) {
-      await forwardRef.current.requestFullscreen();
+      await containerRef.current.requestFullscreen();
     }
     setIsFullScreen(true);
     setBoardType(boardType);
   };
 
-  const exitFullscreen = async (boardType: BoardType) => {
-    if (document.fullscreenElement) {
-      await document.exitFullscreen();
-    }
-    setIsFullScreen(false);
-    setBoardType("noType");
-  };
+  // const exitFullscreen = async (boardType: BoardType) => {
+  //   if (document.fullscreenElement) {
+  //     await document.exitFullscreen();
+  //   }
+  //   setIsFullScreen(false);
+  //   setBoardType("noType");
+  // };
 
   // const toggleFullscreen = (forwardRef, boardType: BoardType) => {
   //   if (!document.fullscreenElement) {
@@ -137,18 +131,14 @@ const ImageViewer = ({
             }}
           />
         </div>
-        <button onClick={() => enterFullscreen(containerRef, "image")}>
-          Full Screen
-        </button>
-        <button onClick={() => enterFullscreen(containerRef, "whiteboard")}>
+        <button onClick={() => enterFullscreen("image")}>Full Screen</button>
+        <button onClick={() => enterFullscreen("whiteboard")}>
           WhiteBoard
         </button>
-        <button onClick={() => enterFullscreen(containerRef, "blackboard")}>
+        <button onClick={() => enterFullscreen("blackboard")}>
           BlackBoard
         </button>
-        <button onClick={() => (setOpenOptionComponent(true))}>
-          Option
-        </button>
+        <button onClick={() => setOpenOptionComponent(true)}>Option</button>
         {/* <button onClick={() => toggleFullscreen()}>Background</button> */}
       </div>
 

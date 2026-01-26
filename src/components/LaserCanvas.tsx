@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-type Point = { x: number; y: number };
+// type Point = { x: number; y: number };
 
 type LaserPoint = {
   x: number;

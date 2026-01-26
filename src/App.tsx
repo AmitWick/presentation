@@ -4,6 +4,9 @@ import ImageViewer from "./components/ImageViewer";
 import ReactCanvas from "./components/ReactCanvas";
 import CustomizeSetup from "./components/customizeSetup/CustomizeSetup";
 
+export type BoardType = "noType" | "image" | "blackboard" | "whiteboard";
+export type ToolType = "pen" | "laser";
+
 function App() {
   const [slides, setSlides] = useState<string[]>(() => {
     return localStorage.getItem("slides")
@@ -11,29 +14,20 @@ function App() {
       : [];
   });
   const [current, setCurrent] = useState(0);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [drawings, setDrawings] = useState<Record<number, ImageData>>({});
-  const [boardType, setBoardType] = useState<
-    "noType" | "image" | "blackboard" | "whiteboard"
-  >("noType");
+  const [boardType, setBoardType] = useState<BoardType>("noType");
 
-  // const openOptionComponentRef = useRef(false);
   const [openOptionComponent, setOpenOptionComponent] = useState(false);
 
-  const [tool, setTool] = useState<"pen" | "laser">("laser");
-  const [blackBoardTool, setBlackBoardTool] = useState<"pen" | "laser">(
-    "laser"
-  );
-  const [whiteBoardTool, setWhiteBoardTool] = useState<"pen" | "laser">(
-    "laser"
-  );
+  const [tool, setTool] = useState<ToolType>("laser");
+  const [blackBoardTool, setBlackBoardTool] = useState<ToolType>("laser");
+  const [whiteBoardTool, setWhiteBoardTool] = useState<ToolType>("laser");
 
   const saveDrawing = (index: number, data: ImageData) => {
     setDrawings((prev) => ({ ...prev, [index]: data }));
   };
-
-  console.log({ drawings });
 
   return (
     <>
