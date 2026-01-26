@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  type ChangeEvent,
-} from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 type Point = {
   x: number;
   y: number;
@@ -18,7 +12,6 @@ const usePenCanvas = (strokeColor: string = "#000000") => {
   const pointsRef = useRef<Point[]>([]);
   const isEraser = useRef(false);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  //   const [isInside, setIsInside] = useState(false);
 
   useLayoutEffect(() => {
     const canvas = canvasRef.current!;
@@ -28,7 +21,6 @@ const usePenCanvas = (strokeColor: string = "#000000") => {
     const rect = parent.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
 
-    // const rect = canvas.getBoundingClientRect();
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
 
@@ -161,13 +153,6 @@ const usePenCanvas = (strokeColor: string = "#000000") => {
     ctx.clearRect(0, 0, rect.width, rect.height);
   };
 
-  //   const clearCanvas = () => {
-  //     const canvas = canvasRef.current!;
-  //     const ctx = ctxRef.current!;
-
-  //     ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //   };
-
   const enableEraser = () => (isEraser.current = true);
 
   const enablePen = () => (isEraser.current = false);
@@ -190,7 +175,7 @@ const usePenCanvas = (strokeColor: string = "#000000") => {
     />
   );
 
-  const styleObject = {
+  const styleObject: React.CSSProperties = {
     width: "100vw",
     height: "100vh",
     display: "block",
@@ -206,7 +191,6 @@ const usePenCanvas = (strokeColor: string = "#000000") => {
   };
 
   const restoreImageData = (data: ImageData) => {
-    const canvas = canvasRef.current!;
     const ctx = ctxRef.current!;
     ctx.putImageData(data, 0, 0);
   };

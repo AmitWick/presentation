@@ -3,7 +3,7 @@ import usePenCanvas from "../hooks/usePenCanvas";
 
 type Props = {
   setTool: (tool: "pen" | "laser") => void;
-  tool: "pen" | "laser";
+  // tool: "pen" | "laser";
   defaultStrokeColor?: string;
   drawings?: Record<number, ImageData>;
   saveDrawing?: (index: number, data: ImageData) => void;

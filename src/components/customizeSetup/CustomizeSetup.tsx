@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import InitialColor from "./InitialColor";
 import PenColorSet from "./PenColorSet";
 import PenSize from "./PenSize";
@@ -19,7 +19,11 @@ type OptionType =
   | "Hotkeys"
   | "Toggle Options";
 
-const CustomizeSetup = ({ setOpenOptionComponent }) => {
+type Props = {
+  setOpenOptionComponent: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const CustomizeSetup = ({ setOpenOptionComponent }: Props) => {
   const [activeOption, setActiveOption] = useState<OptionType>("Initial Color");
 
   return (

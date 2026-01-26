@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 type LaserPoint = {
   x: number;
@@ -91,7 +91,7 @@ const useLaserCanvas = () => {
           ctx.lineTo(pts[1].x, pts[1].y);
         } else {
           for (let i = 1; i < pts.length - 1; i++) {
-            const p0 = pts[i - 1];
+            // const p0 = pts[i - 1];
             const p1 = pts[i];
             const p2 = pts[i + 1];
 
@@ -371,7 +371,7 @@ const useLaserCanvas = () => {
     />
   );
 
-  const styleObject = {
+  const styleObject: React.CSSProperties = {
     touchAction: "none",
     userSelect: "none",
     cursor: "none",

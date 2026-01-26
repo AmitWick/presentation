@@ -1,4 +1,3 @@
-import { useState } from "react";
 import EphemeralCanvas from "./EphemeralCanvas";
 import LearnWritingInCanvas from "./LearnWritingInCanvas";
 
@@ -14,15 +13,13 @@ type Props = {
 
 const ReactCanvas = ({
   currentSlide,
-  defaultTool = "laser",
+  // defaultTool = "laser",
   defaultStrokeColor,
   drawings,
   saveDrawing,
   tool,
   setTool,
 }: Props) => {
-  // const [tool, setTool] = useState<"pen" | "laser">(defaultTool);
-
   return (
     <>
       {tool === "pen" && (

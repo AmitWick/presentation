@@ -3,7 +3,7 @@ import useLaserCanvas from "../hooks/useLaserCanvas";
 
 type Props = {
   setTool: (tool: "pen" | "laser") => void;
-  tool: "pen" | "laser";
+  // tool: "pen" | "laser";
   currentSlide: number;
 };
 
